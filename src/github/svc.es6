@@ -1,7 +1,7 @@
 (function(app) {
   function factory($http) {
     class GithubSvc {
-      fetchStories() {
+      static fetchStories() {
         return $http.get('https://api.github.com/users')
       }
     }
