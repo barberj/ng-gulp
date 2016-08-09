@@ -24,11 +24,19 @@ gulp.task('es6', function () {
     pipe(gulp.dest('build/.'));
 });
 
-gulp.task('js', ['es6', 'create_vendor'], function () {
+gulp.task('xjs', ['es6', 'create_vendor'], function () {
   gulp.src(['build/vendor.js', 'build/module.js', 'build/**/*.js']).
     pipe(debug({title: 'js:' })).
     pipe(concat('app.js')).
     pipe(debug({title: 'min:' })).
+    pipe(uglify()).
+    pipe(gulp.dest('.'));
+});
+
+gulp.task('js', function () {
+  gulp.src(['node_modules/angular/angular.min.js', 'src/**/module.es6', 'src/**/*']).
+    pipe(concat('app.js')).
+    pipe(babel({ presets: ['es2015'] })).
     pipe(uglify()).
     pipe(gulp.dest('.'));
 });
