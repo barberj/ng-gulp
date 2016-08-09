@@ -1,13 +1,13 @@
 (function(app) {
-  function factory($http) {
+  function service($http) {
     class GithubSvc {
-      static fetchStories() {
+      fetchStories() {
         return $http.get('https://api.github.com/users')
       }
     }
 
-    return GithubSvc;
+    return new GithubSvc();
   }
 
-  app.factory('GithubSvc', ["$http", factory]);
+  app.service('GithubSvc', ["$http", service]);
 })(angular.module('app'));
