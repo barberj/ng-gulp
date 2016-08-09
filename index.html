@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <title></title>
 </head>
-<body ng-controller='GithubCtrl'>
+<body ng-controller='GithubCtrl as ctrl'>
   <h1>Github Users</h1>
   <ul>
-    <li ng-repeat='user in users'>
+    <li ng-repeat='user in ctrl.users'>
       <a href='https://github.com/{{user.login}}'>
         {{user.login}}
       </a>

@@ -1,14 +1,14 @@
 (function(app) {
-  function controller($scope, GithubSvc) {
+  function controller(GithubSvc) {
     class GithubCtrl {
       constructor() {
         GithubSvc.fetchStories().
-          success((users) => $scope.users = users);
+          success((users) => this.users = users);
       }
     }
 
     return new GithubCtrl();
   }
 
-  app.controller('GithubCtrl', ["$scope", "GithubSvc", controller]);
+  app.controller('GithubCtrl', ["GithubSvc", controller]);
 })(angular.module('app'));
