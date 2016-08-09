@@ -12,7 +12,7 @@ gulp.task('es6', function () {
 });
 
 gulp.task('js', ['es6'], function () {
-  gulp.src(['vendor/**/*', 'build/**/module.js', 'src/**/*.js']).
+  gulp.src(['vendor/**/*', 'build/**/module.js', 'build/**/*.js']).
     pipe(concat('app.js')).
     pipe(uglify()).
     pipe(gulp.dest('.'));
