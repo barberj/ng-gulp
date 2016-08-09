@@ -2,6 +2,7 @@
 
 Run:
 ```
+➜  ng-gulp git:(master) ✗ npm install
 ➜  ng-gulp git:(master) ✗ gulp js
 [04:42:43] Using gulpfile ~/src/ng-gulp/gulpfile.js
 [04:42:43] Starting 'js'...
