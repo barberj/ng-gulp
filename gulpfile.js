@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
   concat = require('gulp-concat'),
+  uglify = require('gulp-uglify'),
   babel = require('gulp-babel');
 
 gulp.task('js', function () {
@@ -8,5 +9,6 @@ gulp.task('js', function () {
       presets: ['es2015']
     })).
     pipe(concat('app.js')).
+    pipe(uglify()).
     pipe(gulp.dest('.'));
 });
