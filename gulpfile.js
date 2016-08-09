@@ -4,7 +4,7 @@ var gulp = require('gulp'),
   babel = require('gulp-babel');
 
 gulp.task('js', function () {
-  gulp.src(['src/**/module.es6', 'src/**/*']).
+  gulp.src(['vendor/**/*', 'src/**/module.es6', 'src/**/*']).
     pipe(babel({
       presets: ['es2015']
     })).
