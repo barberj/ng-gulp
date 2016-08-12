@@ -15,15 +15,15 @@ var vendorFiles = [
   'node_modules/angular-ui-router/release/angular-ui-router.min.js'
 ]
 
-gulp.task('create_vendor', function () {
-  gulp.src(vendorFiles).
+gulp.task('create_vendor', ['clean'], function () {
+  return gulp.src(vendorFiles).
     pipe(debug({title: 'vendor:' })).
     pipe(concat('vendor.js')).
     pipe(gulp.dest('build/.'));
 });
 
-gulp.task('es6', function () {
-  gulp.src(['src/**/module.es6', 'src/**/*']).
+gulp.task('es6', ['clean'], function () {
+  return gulp.src(['src/**/module.es6', 'src/**/*.es6']).
     pipe(debug({title: 'es6:' })).
     pipe(babel({
       presets: ['es2015']
@@ -31,31 +31,13 @@ gulp.task('es6', function () {
     pipe(gulp.dest('build/.'));
 });
 
-gulp.task('xjs', ['es6', 'create_vendor'], function () {
-  gulp.src(['build/vendor.js', 'build/module.js', 'build/**/*.js']).
+gulp.task('default', ['clean', 'es6', 'create_vendor'], function () {
+  gulp.src(['build/vendor.js', 'build/**/module.js', 'build/**/*.js']).
     pipe(debug({title: 'js:' })).
     pipe(concat('app.js')).
     pipe(debug({title: 'min:' })).
     pipe(uglify()).
-    pipe(gulp.dest('.'));
-});
-
-var files = [
-  'node_modules/angular/angular.min.js',
-  'node_modules/angular-ui-router/release/angular-ui-router.min.js',
-  'src/**/module.es6', 'src/**/*'
-]
-
-gulp.task('build', function () {
-  gulp.src(files).
-    pipe(concat('app.js')).
-    pipe(babel({ presets: ['es2015'] })).
-    pipe(uglify()).
     pipe(gulp.dest('public/.'));
-});
-
-gulp.task('js', ['clean'], function () {
-  gulp.start('build');
 });
 
 gulp.task('slim', function(){
