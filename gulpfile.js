@@ -2,7 +2,12 @@ var gulp = require('gulp'),
   concat = require('gulp-concat'),
   uglify = require('gulp-uglify'),
   debug = require('gulp-debug'),
-  babel = require('gulp-babel');
+  babel = require('gulp-babel'),
+  del = require('del');
+
+gulp.task('clean', function() {
+  return del(['build/**/*', 'public/**/*', 'build', 'public']);
+});
 
 var vendorFiles = [
   'node_modules/angular/angular.min.js',
@@ -40,10 +45,14 @@ var files = [
   'src/**/module.es6', 'src/**/*'
 ]
 
-gulp.task('js', function () {
+gulp.task('build', function () {
   gulp.src(files).
     pipe(concat('app.js')).
     pipe(babel({ presets: ['es2015'] })).
     pipe(uglify()).
     pipe(gulp.dest('public/.'));
+});
+
+gulp.task('js', ['clean'], function () {
+  gulp.start('build');
 });
