@@ -4,7 +4,8 @@ var gulp = require('gulp'),
   debug = require('gulp-debug'),
   babel = require('gulp-babel'),
   del = require('del'),
-  slim = require("gulp-slim");
+  slim = require("gulp-slim"),
+  templateCache = require('gulp-angular-templatecache');
 
 gulp.task('clean', function() {
   return del(['build/**/*', 'public/**/*', 'build', 'public']);
@@ -31,7 +32,21 @@ gulp.task('es6', ['clean'], function () {
     pipe(gulp.dest('build/.'));
 });
 
-gulp.task('default', ['clean', 'es6', 'create_vendor'], function () {
+gulp.task('slim', ['clean'], function() {
+  return gulp.src("src/**/*.slim").
+    pipe(slim()).
+    pipe(gulp.dest("build/."));
+});
+
+gulp.task('templates', ['clean', 'slim'], function() {
+  return gulp.src('build/**/*.html').
+    pipe(templateCache('templates.js', {
+      standalone: true
+    })).
+    pipe(gulp.dest('build/.'));
+});
+
+gulp.task('default', ['clean', 'es6', 'create_vendor', 'templates'], function () {
   gulp.src(['build/vendor.js', 'build/**/module.js', 'build/**/*.js']).
     pipe(debug({title: 'js:' })).
     pipe(concat('app.js')).
@@ -40,11 +55,3 @@ gulp.task('default', ['clean', 'es6', 'create_vendor'], function () {
     pipe(gulp.dest('public/.'));
 });
 
-gulp.task('slim', function(){
-  gulp.src("./src/slim/*.slim").
-    //pipe(slim({
-    //  pretty: true
-    //})).
-    pipe(slim()).
-    pipe(gulp.dest("build/html/"));
-});
