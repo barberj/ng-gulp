@@ -3,7 +3,8 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   debug = require('gulp-debug'),
   babel = require('gulp-babel'),
-  del = require('del');
+  del = require('del'),
+  slim = require("gulp-slim");
 
 gulp.task('clean', function() {
   return del(['build/**/*', 'public/**/*', 'build', 'public']);
@@ -55,4 +56,13 @@ gulp.task('build', function () {
 
 gulp.task('js', ['clean'], function () {
   gulp.start('build');
+});
+
+gulp.task('slim', function(){
+  gulp.src("./src/slim/*.slim").
+    //pipe(slim({
+    //  pretty: true
+    //})).
+    pipe(slim()).
+    pipe(gulp.dest("build/html/"));
 });
