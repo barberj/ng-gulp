@@ -5,6 +5,10 @@ get '/' do
   slim :index
 end
 
+get '/github' do
+  slim :index
+end
+
 __END__
 
 @@index
