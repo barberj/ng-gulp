@@ -5,7 +5,8 @@ var gulp = require('gulp'),
   babel = require('gulp-babel');
 
 var vendorFiles = [
-  'node_modules/angular/angular.min.js'
+  'node_modules/angular/angular.min.js',
+  'node_modules/angular-ui-router/release/angular-ui-router.min.js'
 ]
 
 gulp.task('create_vendor', function () {
@@ -33,10 +34,16 @@ gulp.task('xjs', ['es6', 'create_vendor'], function () {
     pipe(gulp.dest('.'));
 });
 
+var files = [
+  'node_modules/angular/angular.min.js',
+  'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+  'src/**/module.es6', 'src/**/*'
+]
+
 gulp.task('js', function () {
-  gulp.src(['node_modules/angular/angular.min.js', 'src/**/module.es6', 'src/**/*']).
+  gulp.src(files).
     pipe(concat('app.js')).
     pipe(babel({ presets: ['es2015'] })).
     pipe(uglify()).
-    pipe(gulp.dest('.'));
+    pipe(gulp.dest('public/.'));
 });
